@@ -1,14 +1,25 @@
 <ul class="usa-accordion{%
   if accordion.variant %}-{{ accordion.variant }}{% endif %}"{%
-  if accordion.multiselectable == true %} aria-multiselectable="true"{% endif %}>
+  if accordion.multiselectable == true %} aria-multiselectable="true"{% endif %}
+  role="presentation"
+>
   {% for item in accordion.items -%}
   <li>
-    <button class="usa-accordion-button"
-      aria-expanded="{{ item.expanded | default('false') }}"
-      aria-controls="{{ accordion.id_prefix }}{{ item.id }}">
-      {{ item.title }}
-    </button>
-    <div id="{{ accordion.id_prefix }}{{ item.id }}" class="usa-accordion-content">
+    <div role="heading">
+      <button
+        id="{{ item.id }}-button-id"
+        class="usa-accordion-button"
+        aria-expanded="{{ item.expanded | default('false') }}"
+        aria-controls="{{ accordion.id_prefix }}{{ item.id }}">
+        {{ item.title }}
+      </button>
+    </div>
+    <div
+      id="{{ accordion.id_prefix }}{{ item.id }}"
+      class="usa-accordion-content"
+      role="region"
+      aria-labelledby="{{ item.id }}-button-id"
+    >
       {{ item.content }}
     </div>
   </li>{% endfor %}
